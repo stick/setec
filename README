@@ -1,0 +1,75 @@
+Setec (obscure reference to SETEC Astronomy)
+============================================
+
+Team based secure data storage based on GPG.
+
+KeepassX/1Password/Password Gorilla/etc are great systems for storing passwords, but do not effectively address needs and usage patterns of teams.  They all rely on a shared key/password in order to decrypt the store.  Distributing a single password is a headache and increases the risk of it being compromised.  GPG is a great way to handle role based encryption but requires a high degree of organization in order to manage keys and groups.  Using an encrypted file for passwords and such is fine but provides too little structure to allow for effective searching of the contents.
+
+Features
+--------
+* secure
+* group based
+* no single shared password
+* searchable
+* access for universal key (access of last resort)
+* API
+
+Records are stored in a queryable datastore, sensative data in each record is encrypted with gpg to all receipients of the defined group. 
+
+Each record consists of several fields:
+* title
+* description
+* username
+* password [always encrypted]
+* url
+* comments
+* modified date
+* created date
+* expiration date
+* group membership
+
+Permission Model
+================
+
+* users belong to one or more groups
+* records belong to one or more groups
+* data is encrypted to each member of a group's gpg key
+* users can only see/edit/decrypt records of groups they belong to
+
+Questions
+=========
+
+Example Usage
+=============
+
+# list entries containing 'email' 
+$ setec list 'email'
+
+# retrieve all record details for 'root-password'
+# Failed password or incorrect attempt will display record and omit the password field.
+$ setec retrieve root-password
+
+# retrieve username from record
+$ setec retrieve root-password username
+
+# retrieve password from record
+$ setec retrieve root-password password
+
+# update password on record
+$ setec update root-password password
+
+# create new group
+$ setec-admin create group sysadmins
+
+# add user to group 'sysadmins'
+$ setec-admin update group sysadmins add-member bob@example.com
+
+# rmove user from group 'sysadmins'
+$ setec-admin update group sysadmins remove-member bob@example.com --public_key /path/to/public.key
+
+# create new record 'ldap-manager'
+$ setec create record ldap-manager
+
+# add record 'ldap-manager' to group 'sysadmins'
+$ setec update ldap-manager add-group sysadmins
+
