@@ -42,21 +42,22 @@ Questions
 Example Usage
 =============
 
+setec [action] [object] [attributes]
 # list entries containing 'email' 
 $ setec list 'email'
 
 # retrieve all record details for 'root-password'
 # Failed password or incorrect attempt will display record and omit the password field.
-$ setec retrieve root-password
+$ setec retrieve record root-password 
 
 # retrieve username from record
-$ setec retrieve root-password username
+$ setec retrieve record root-password username
 
 # retrieve password from record
-$ setec retrieve root-password password
+$ setec retrieve record root-password password
 
 # update password on record
-$ setec update root-password password
+$ setec update record root-password password
 
 # create new group
 $ setec-admin create group sysadmins
